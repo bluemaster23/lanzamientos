@@ -26,16 +26,20 @@ class homeController extends AbstractController {
     }
 
     /**
-     * @Route("/lanzamientos", name="lanzamientos")
+     * @Route("/lanzamientos/{page}", name="lanzamientos")
      * @param Request $request
      * @return Response
      */
-    public function lanzamientos(Request $request, spotifyService $spotify) {
+    public function lanzamientos(int $page = 0 , Request $request, spotifyService $spotify) {
+        
         $this->verificarToken($spotify ,$request);
-        $data = $spotify->getNewAlbum();
+        
+        $data = $spotify->getNewAlbum($page*20);
         return $this->render('home.html.twig', [
             'title' => 'lanzamientos',
-            'datas' => count($data) > 0  ?  $data["albums"]["items"] : []
+            'datas' => $data["albums"]["items"],
+            'total' => count($data["albums"]["items"]),
+            'page' => $page+1
         ]);
     }
 
@@ -45,14 +49,19 @@ class homeController extends AbstractController {
      * @return Response
      */
     public function artista(String $id, Request $request, spotifyService $spotify){
-        $this->verificarToken($spotify ,$request);  
-        $artista = $spotify->getArstist($id);
-        $track = $spotify->getTopTrackArtist($id);
-        return $this->render('artista.html.twig', [
-            'title' => 'artista',
-            'artista' => count($artista) > 0  ?  $artista : [],
-            'top' => count($track) > 0  ?  $track["tracks"] : []
-        ]);
+        try{
+            $this->verificarToken($spotify ,$request);  
+            $artista = $spotify->getArstist($id);
+            $track = $spotify->getTopTrackArtist($id);
+            return $this->render('artista.html.twig', [
+                'title' => 'artista',
+                'artista' => count($artista) > 0  ?  $artista : [],
+                'top' => count($track) > 0  ?  $track["tracks"] : []
+            ]);
+        }catch(\Exception $e){
+            return $this->render('error.html.twig');
+        }
+
     }
 
 

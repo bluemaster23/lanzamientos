@@ -62,7 +62,7 @@ class spotifyService{
     }
 
     public function getNewAlbum($id = ''){
-        return $this->connectionSearch('browse' ,'new-releases');	
+        return $this->connectionSearch('browse' ,"new-releases?offset=$id");	
     }
 
     public function getArstist($id = ''){
