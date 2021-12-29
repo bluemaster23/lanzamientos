@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ title }}{% endblock %}
+{% block stylesheets %}
+<style>
+    .iconUser{
+        border-radius: 100%;
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 50%);
+    }
+</style>
+{% endblock %}
+{% block body %}
+        <div class='row'>
+            <div class='col col-md-3'><img class='iconUser' src="{{ artista['images'][2]['url'] }}" ></div>
+            <div  class='col col-md-5'>
+                <div class='row'>
+                     <div class='col col-md-12'><h3>{{ artista['name'] }}<h3></div>
+                     <div class='col col-md-12'>
+                        {% for genero in artista["genres"]%}
+                            <span  class="badge rounded-pill bg-light text-dark">{{ genero }}</span>
+                        {% endfor %}
+                     </div>
+                     <div class='col col-md-12'>
+                        <a target='__blank' href="{{ artista['external_urls']['spotify'] }}">Ir a la página del artista</a>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <th>Foto</th>
+                <th>Album</th>
+                <th>Canción</th>
+            </thead>
+            <tbody>
+                {% for data in top %}
+                    <tr>
+                        <td><img src="{{ data['album']['images'][2]['url'] }}" /></td>
+                        <td>{{ data['album']['name'] }}</td>
+                        <td>{{ data['name'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}

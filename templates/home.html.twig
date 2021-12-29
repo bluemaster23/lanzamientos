@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ title }}{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        {% for data in datas %}
+            <div class="col col-4 ">
+                <div class='card'>
+                    <img src="{{ data['images'][0]['url'] }}" class="card-img-top" >
+                    <div class="card-body">
+                        <h5  class="card-title">{{ data["name"] }}</h5>
+                        {% for  art  in data["artists"] %}
+                            <a  class="badge bg-primary" href="/artista/{{ art['id'] }}" > {{ art['name']}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
