@@ -9,7 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\Resource\Security\Encrypt;
 use App\Service\spotifyService;
 
 class homeController extends AbstractController {
